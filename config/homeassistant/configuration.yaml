@@ -1,0 +1,38 @@
+
+homeassistant:
+  name: Maison
+  latitude: !secret homeassistant_latitude
+  longitude: !secret homeassistant_longitude
+  elevation: !secret homeassistant_elevation
+  unit_system: metric
+  temperature_unit: C
+  time_zone: Europe/Paris
+  language: fr
+  country: FR
+  currency: EUR
+  external_url: !secret homeassistant_external_url
+  internal_url: !secret homeassistant_internal_url
+
+http:
+  use_x_forwarded_for: true
+  ip_ban_enabled: true
+  trusted_proxies:
+    - 127.0.0.1
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+person:
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+recorder:
+  purge_keep_days: 10
+  db_url: !secret homeassistant_recorder_db_url

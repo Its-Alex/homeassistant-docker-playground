@@ -1,0 +1,62 @@
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:2025.6
+    restart: unless-stopped
+    volumes:
+      - ./config/homeassistant/custom_components:/config/custom_components
+      - ./config/homeassistant/python_scripts:/config/python_scripts
+      - ./config/homeassistant/configuration.yaml:/config/configuration.yaml
+      - ./config/homeassistant/automations.yaml:/config/automations.yaml
+      - ./config/homeassistant/scenes.yaml:/config/scenes.yaml
+      - ./config/homeassistant/scripts.yaml:/config/scripts.yaml
+      - ./config/homeassistant/secrets.yaml:/config/secrets.yaml
+      - ./volumes/homeassistant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    privileged: true
+    network_mode: host
+    environment:
+      - TZ=Europe/Paris
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
+      music-assistant-server:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8123 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    volumes:
+      - ./volumes/postgres/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=homeassistant
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=homeassistant
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U homeassistant"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  music-assistant-server:
+    image: ghcr.io/music-assistant/server:2.5
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./volumes/music-assistant-server/data:/data/
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+    security_opt:
+      - apparmor:unconfined
+    environment:
+      - LOG_LEVEL=info
