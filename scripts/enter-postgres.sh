@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "$0")/../"
+
+docker compose exec postgres sh -c "psql -U \$POSTGRES_USER -d \$POSTGRES_DB"
