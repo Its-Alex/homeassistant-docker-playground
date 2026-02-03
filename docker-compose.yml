@@ -1,6 +1,6 @@
 services:
   homeassistant:
-    image: ghcr.io/home-assistant/home-assistant:2025.6
+    image: ghcr.io/home-assistant/home-assistant:2026.1
     restart: unless-stopped
     volumes:
       - ./config/homeassistant/custom_components:/config/custom_components
@@ -10,6 +10,7 @@ services:
       - ./config/homeassistant/scenes.yaml:/config/scenes.yaml
       - ./config/homeassistant/scripts.yaml:/config/scripts.yaml
       - ./config/homeassistant/secrets.yaml:/config/secrets.yaml
+      - ./config/homeassistant/.storage/onboarding:/config/.storage/onboarding
       - ./volumes/homeassistant/config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
@@ -31,7 +32,7 @@ services:
       start_period: 30s
 
   postgres:
-    image: postgres:15-alpine
+    image: postgres:18-alpine
     restart: unless-stopped
     volumes:
       - ./volumes/postgres/data:/var/lib/postgresql/data
@@ -48,7 +49,7 @@ services:
       retries: 5
 
   music-assistant-server:
-    image: ghcr.io/music-assistant/server:2.5
+    image: ghcr.io/music-assistant/server:2.7.4
     restart: unless-stopped
     network_mode: host
     volumes:
