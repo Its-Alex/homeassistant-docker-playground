@@ -78,6 +78,19 @@ docker run --rm -v "$(pwd)/config/mosquitto:/mosquitto/config" eclipse-mosquitto
 
 Replace `USERNAME` and `PASSWORD`. After changing `passwd`, restart Mosquitto: `docker compose restart mosquitto`. Update `docker-compose.yml` (e.g. zigbee2mqtt env) and/or `config/homeassistant/secrets.yaml` if you change credentials.
 
+## Zigbee2mqtt
+
+All [Zigbee2MQTT](https://www.zigbee2mqtt.io/) configuration is done via environment variables in
+[docker-compose.yml](./docker-compose.yml). This repository is set up to use
+[Sonoff Zigbee Dongle 3.0](https://sonoff.tech/fr-fr/products/sonoff-zigbee-3-0-usb-dongle-plus-zbdongle-e)
+using [Ember ZNet](https://www.silabs.com/software-and-tools/zigbee-emberznet)
+with a baudrate of 115200.
+
+I flashed my dongle using the website of [silabs-firmware-builder](https://github.com/darkxst/silabs-firmware-builder).
+
+If your setup is not exactly the same, you should probably update the [Zigbee2MQTT](https://www.zigbee2mqtt.io/)
+configuration.
+
 ## Sources
 
 ### Automation
