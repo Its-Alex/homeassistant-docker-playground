@@ -6,6 +6,14 @@ setup.
 The aim is automate an installation with some features and reproduce it to tweak
 them.
 
+- [Homeassistant docker playground](#homeassistant-docker-playground)
+  - [How to start](#how-to-start)
+  - [How to stop](#how-to-stop)
+  - [MQTT](#mqtt)
+    - [Generating MQTT passwords](#generating-mqtt-passwords)
+  - [Sources](#sources)
+    - [Automation](#automation)
+
 ## How to start
 
 You can launch a configuration with [HA](https://fr.wikipedia.org/wiki/Home_Assistant),
