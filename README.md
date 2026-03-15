@@ -26,13 +26,13 @@ $ ./scripts/up.sh
 To stop the service you can simply run:
 
 ```sh
-$ docker compose down -v
+$ ./scripts/down.sh
 ```
 
 If you want to erase datas too, you can use:
 
 ```sh
-$ sudo rm -rf volumes/
+$ ./scripts/down.sh --volumes
 ```
 
 ## MQTT
