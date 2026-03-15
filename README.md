@@ -35,11 +35,22 @@ If you want to erase datas too, you can use:
 $ sudo rm -rf volumes/
 ```
 
-## MQTT authentication (Mosquitto)
+## MQTT
 
-Two users in `config/mosquitto/passwd`: **mqttuser** / **mqttpass** (Home Assistant), **zigbee2mqtt** / **zigbee2mqtt** (Zigbee2MQTT).
+This repositoy choose to use [mosquitto](https://mosquitto.org/) as MQTT broker.
+Two users are already created in `config/mosquitto/passwd`:
+- Homeassistant:
+  - Username: **homeassistant**
+  - Password: **password**
+- Zigbee2MQTT:
+  - Username: **zigbee2mqtt**
+  - Password: **password**
 
-#### Generating MQTT passwords
+By default Homeassistant MQTT integration is not enabled (due to difficulty to
+set it enabled in [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code)).
+You must enable it manually following [Homeassistant MQTT documentation](https://www.home-assistant.io/integrations/mqtt).
+
+### Generating MQTT passwords
 
 Passwords are stored in `config/mosquitto/passwd` and must be hashed with `mosquitto_passwd`. Using the same image as in the stack:
 
