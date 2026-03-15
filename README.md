@@ -35,6 +35,30 @@ If you want to erase datas too, you can use:
 $ sudo rm -rf volumes/
 ```
 
+## MQTT authentication (Mosquitto)
+
+Two users in `config/mosquitto/passwd`: **mqttuser** / **mqttpass** (Home Assistant), **zigbee2mqtt** / **zigbee2mqtt** (Zigbee2MQTT).
+
+#### Generating MQTT passwords
+
+Passwords are stored in `config/mosquitto/passwd` and must be hashed with `mosquitto_passwd`. Using the same image as in the stack:
+
+**Create a new password file** (overwrites existing; use only for the first user):
+
+```sh
+docker run --rm -v "$(pwd)/config/mosquitto:/mosquitto/config" eclipse-mosquitto \
+  mosquitto_passwd -b -c /mosquitto/config/passwd USERNAME PASSWORD
+```
+
+**Add a user** to an existing file (do not use `-c`):
+
+```sh
+docker run --rm -v "$(pwd)/config/mosquitto:/mosquitto/config" eclipse-mosquitto \
+  mosquitto_passwd -b /mosquitto/config/passwd USERNAME PASSWORD
+```
+
+Replace `USERNAME` and `PASSWORD`. After changing `passwd`, restart Mosquitto: `docker compose restart mosquitto`. Update `docker-compose.yml` (e.g. zigbee2mqtt env) and/or `config/homeassistant/secrets.yaml` if you change credentials.
+
 ## Sources
 
 ### Automation

@@ -79,9 +79,11 @@ services:
       - TZ=Europe/Paris
       # Disable onboarding server
       - ZIGBEE2MQTT_ONBOARD_NO_SERVER=1
-      # MQTT configuration
+      # MQTT configuration (zigbee2mqtt user in config/mosquitto/passwd)
       - ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC=zigbee2mqtt
       - ZIGBEE2MQTT_CONFIG_MQTT_SERVER=mqtt://mosquitto:1883
+      - ZIGBEE2MQTT_CONFIG_MQTT_USER=zigbee2mqtt
+      - ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD=zigbee2mqtt
       # Serial configuration
       - ZIGBEE2MQTT_CONFIG_SERIAL_PORT=/dev/ttyUSB0
       - ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER=ember
