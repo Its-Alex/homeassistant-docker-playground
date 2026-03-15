@@ -23,6 +23,10 @@ services:
         restart: true
       music-assistant-server:
         condition: service_started
+      mosquitto:
+        condition: service_healthy
+      zigbee2mqtt:
+        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8123 || exit 1"]
       interval: 30s
@@ -69,10 +73,20 @@ services:
     volumes:
       - ./config/mosquitto:/mosquitto/config
       - ./volumes/mosquitto/data:/mosquitto/data
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z 127.0.0.1 1883 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
 
   zigbee2mqtt:
     image: ghcr.io/koenkk/zigbee2mqtt
     restart: unless-stopped
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    # Podman compatibility
     annotations:
       run.oci.keep_original_groups: "1"
     environment:
@@ -103,6 +117,11 @@ services:
       - /run/udev:/run/udev:ro
     ports:
       - 8080:8080
-    # Podman compatibility
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://127.0.0.1:8080', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
