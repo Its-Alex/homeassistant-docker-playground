@@ -1,12 +1,22 @@
-# Homeassistant docker playground
+# Home Assistant docker playground
 
 This repository is made to help people try and test things with a Docker HA
 setup.
 
 The aim is to automate an installation with some features and reproduce it to tweak
-them.
+them. Home Assistant favors UI-driven configuration for many integrations; this
+repository provides a base, and integrations typically require manual setup via the
+UI. Sources:
 
-- [Homeassistant docker playground](#homeassistant-docker-playground)
+- https://github.com/home-assistant/architecture/issues/143
+- https://community.home-assistant.io/t/my-configuration-yaml-is-missing-entries/99242
+- https://www.reddit.com/r/homeassistant/comments/u7d37w/a_change_in_20224_has_made_me_start_to_consider/
+- https://www.reddit.com/r/homeassistant/comments/1auzohe/whats_wrong_with_wanting_yaml_configuration/
+
+The setup skips onboarding and enables every option that can be configured in Home
+Assistant.
+
+- [Home Assistant docker playground](#home-assistant-docker-playground)
   - [How to start](#how-to-start)
   - [How to stop](#how-to-stop)
   - [MQTT](#mqtt)
@@ -30,6 +40,10 @@ $ ./scripts/up.sh
 {"auth_code":"907dd8fda2c94c3ea3352343e960de3d"}%
 ```
 
+Connect to Home Assistant at http://localhost:8123/ with:
+- Username: admin
+- Password: 12345
+
 ## How to stop
 
 To stop the service you can simply run:
@@ -48,7 +62,7 @@ $ ./scripts/down.sh --volumes
 
 This repository chooses to use [mosquitto](https://mosquitto.org/) as the MQTT broker.
 Two users are already created in `config/mosquitto/passwd`:
-- Homeassistant:
+- Home Assistant:
   - Username: **homeassistant**
   - Password: **password**
 - Zigbee2MQTT:
@@ -57,7 +71,7 @@ Two users are already created in `config/mosquitto/passwd`:
 
 By default Home Assistant MQTT integration is not enabled (due to the difficulty of
 enabling it in [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code)).
-You must enable it manually following [Homeassistant MQTT documentation](https://www.home-assistant.io/integrations/mqtt).
+You must enable it manually following [Home Assistant MQTT documentation](https://www.home-assistant.io/integrations/mqtt).
 
 ### Generating MQTT passwords
 
