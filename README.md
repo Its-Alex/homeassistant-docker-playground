@@ -1,9 +1,9 @@
 # Homeassistant docker playground
 
-This repository is made to help people try and test things with docker HA
+This repository is made to help people try and test things with a Docker HA
 setup.
 
-The aim is automate an installation with some features and reproduce it to tweak
+The aim is to automate an installation with some features and reproduce it to tweak
 them.
 
 - [Homeassistant docker playground](#homeassistant-docker-playground)
@@ -11,6 +11,7 @@ them.
   - [How to stop](#how-to-stop)
   - [MQTT](#mqtt)
     - [Generating MQTT passwords](#generating-mqtt-passwords)
+  - [Zigbee2mqtt](#zigbee2mqtt)
   - [Sources](#sources)
     - [Automation](#automation)
 
@@ -37,7 +38,7 @@ To stop the service you can simply run:
 $ ./scripts/down.sh
 ```
 
-If you want to erase datas too, you can use:
+If you want to erase data too, you can use:
 
 ```sh
 $ ./scripts/down.sh --volumes
@@ -45,7 +46,7 @@ $ ./scripts/down.sh --volumes
 
 ## MQTT
 
-This repositoy choose to use [mosquitto](https://mosquitto.org/) as MQTT broker.
+This repository chooses to use [mosquitto](https://mosquitto.org/) as the MQTT broker.
 Two users are already created in `config/mosquitto/passwd`:
 - Homeassistant:
   - Username: **homeassistant**
@@ -54,8 +55,8 @@ Two users are already created in `config/mosquitto/passwd`:
   - Username: **zigbee2mqtt**
   - Password: **password**
 
-By default Homeassistant MQTT integration is not enabled (due to difficulty to
-set it enabled in [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code)).
+By default Home Assistant MQTT integration is not enabled (due to the difficulty of
+enabling it in [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code)).
 You must enable it manually following [Homeassistant MQTT documentation](https://www.home-assistant.io/integrations/mqtt).
 
 ### Generating MQTT passwords
@@ -95,7 +96,7 @@ configuration.
 
 ### Automation
 
-Some thread that helped me for automating HA setup:
+Some threads that helped me with automating HA setup:
 
 - https://community.home-assistant.io/t/how-to-add-new-user-with-command-line-or-even-to-change-user-password-with-command-line/158730/10
 - https://community.home-assistant.io/t/how-to-automate-initial-onboarding-set-up/377143
