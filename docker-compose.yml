@@ -66,7 +66,7 @@ services:
       - LOG_LEVEL=info
 
   mosquitto:
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:2.1-alpine
     restart: unless-stopped
     ports:
       - "1883:1883"
@@ -81,7 +81,7 @@ services:
       start_period: 10s
 
   zigbee2mqtt:
-    image: ghcr.io/koenkk/zigbee2mqtt
+    image: ghcr.io/koenkk/zigbee2mqtt:2.9
     restart: unless-stopped
     depends_on:
       mosquitto:
